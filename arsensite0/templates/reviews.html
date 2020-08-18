@@ -1,0 +1,22 @@
+{% extends "layout01.html" %}
+{% block title %} ВІКНА|СТЕЛІ {% endblock %}
+  {% block main %}
+    <div class="container border bg-yellow p-3" style="margin-top:80px">
+        <h2 class="text-center">Відгуки</h2>
+        {% for review in reviews %}
+            <div class="container-fluid bg-white text-black">
+                <a class="btn btn-outline-light text-black" style="font-size: medium;">{{ review["username"] }}</a><span class="badge text-black">{{ review["date"] }}</span>
+                <p style="max-width: 100%;">{{ review["text"] }}</p>
+            </div>
+        {% endfor %}
+        <form action="/save_review" class="was-validated p-3" method="post">
+            <div class="form-group p-1">
+                <label for="text">Введіть ваш відгук:</label>
+                <input type="textarea" class="form-control" id="text" name="text" required>
+                <div class="valid-feedback">Чудово.</div>
+                <div class="invalid-feedback">Заповніть це поле.</div>
+            </div>
+            <button type="submit" class="btn bg-red mt-2">Надіслати відгук</button>
+        </form>
+    </div>
+  {% endblock %}  

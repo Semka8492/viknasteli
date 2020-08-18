@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+  {% block title %} ВІКНА|СТЕЛІ {% endblock %}
+  {% block main %}
+    <main>
+      <div class="container p-3" style="margin-top:80px"><img src="static/img/img001.jpg" class="img img-fluid" alt="Стелі Вікна"></div>
+      <div class="container">
+        <h1 class='text-center'>Каталог товарів</h1>
+        <div class="row wow fadeIn">
+      {% for key, value in items.items() %}
+      <div class="container text-center pb-3">
+        <div class="row">
+          <div class="col-5 text-left">
+            <form action="/delete_category" method="POST" >
+              <input type="hidden" name="category" value="{{ key }}">
+              <button type="submit" class="btn bg-red">
+                Видалити категорію
+              </button>
+            </form>
+          </div>
+          <div class="col-2 p-0 text-center"><h3 id="{{ key }}"> {{ key }}</h3></div>
+          <div class="col-5 text-center">
+            <form action="/rename" class="form-inline" method="POST">
+              <input type="hidden" name="category" value="{{ key }}">
+              <input type="text" name="name" class="form-control-sm" placeholder="Змінити назву категорії">
+              <button class="btn bg-red">Зберегти назву</button>
+            </form> 
+          </div>
+        </div>
+      </div>
+        <div class="row wow fadeIn">
+          {% for category in value %}
+            <div class="col mb-4">
+              <div class="card bg-yellow">
+                {% if category != "None" %}
+                  <div class="view overlay">
+                    <img src="{{ 'static/img/' + category['path'] }}" alt="Глянцеві" class="card-img-top">
+                  </div>
+                  <div class="card-body text-center">
+                    <strong>Стелі</strong>
+                    <h5>
+                      <strong>
+                        {{category["name"]}} 
+                      </strong>
+                    </h5>
+                    <h4 class="font-weight-bold">
+                      <strong class="text-red">
+                        {{category["price"]}}грн.
+                      </strong>
+                    </h4>
+                    <form action="/delete" method="POST">
+                      <input type="hidden" name="delete" value="{{category['path']}}">
+                      <input type="hidden" name="category" value="{{ key }}">
+                      <button type="submit" class="btn bg-red">
+                        Видалити товар
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                {% else %}
+                <div class="view overlay bg-yellow">
+                  <h2 class="text-center">Додати товар</h2>
+                  <form action="/add" class="p-3" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="category" value="{{ key }}">
+                    <div class="form-group">
+                      <label for="name">Назва товару:</label>
+                      <input type="text" name="name" id="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="price">Ціна:</label>
+                      <input type="number" name="price" id="price" class="form-control">
+                    </div>
+                    <div class="form-group pt-3 pb-3">
+                      <input type="file" class="form-control-file" name="image">
+                    </div>
+                    <button type="submit" class="btn bg-red">Додати</button>
+                  </form>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% if loop.index % 3 == 0 %}
+        </div>
+        <div class="row wow fadeIn">
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <div class="row text-center pb-3">
+        <form action="/add_category" class="form-inline" method="POST">
+          <input type="text" name="name" placeholder="Назва категорії" class="form-control-sm">
+          <input type="number" name="phone" placeholder="Номер для замовлення" class="form-control-sm">
+          <button class="btn bg-red" type="submit">
+            Додати категорію
+          </button>
+        </form>
+      </div>
+      </div>
+    </main>
+    {% endblock %}

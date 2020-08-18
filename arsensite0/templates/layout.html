@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ua">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="static/css/mdb.min.css" />
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+      html,
+      body,
+      header,
+      .carousel{
+          height: 60vh;
+      }
+      @media(max-width: 740px){
+        html,
+        body,
+        header,
+        .carousel{
+            height: 100vh;
+        }
+      }
+      @media(min-width: 800px and max-width 850px){
+        html,
+        body,
+        .carousel{
+            height: 100vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-red scrolling-navbar">
+      <div class="container">
+        <a href="/" class="navbar-brand waves-effect">
+          <strong class="text-white ">ВІКНА|СТЕЛІ</strong>
+        </a>
+        <button class="navbar-toggler" type="button"
+        data-toggle="collapse" data-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav mr-auto ">
+            {% for key in items.keys() %}
+            <li class="nav-item">
+              <a href="#{{key}}" class="nav-link waves-effect text-white">{{ key }}</a>
+            </li>
+            {% endfor %}
+            <li class="nav-item">
+              <a href="#" onclick="postToUrl('/reviews', 'POST')" class="nav-link text-white waves-effect">Відгуки</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav justify-content-end">
+            {% if id == "admin" %}
+            <li class="nav-item">
+              <a href="#" onclick="postToUrl('/admin_panel', 'POST')" class="nav-link text-white">
+                Панель адміністратора
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logout" class="nav-link text-white">
+                Вийти
+              </a>
+            </li>
+            {% elif id %}
+            <li class="nav-item">
+              <a href="/logout" class="nav-link text-white">
+                Вийти
+              </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a href="/login" class="nav-link text-white">
+                <span>Увійти</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/register" class="nav-link text-white">
+                Зареєструватись
+              </a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a href="tel:+380666994780" class="nav-link text-white btn btn-warning">
+                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-telephone-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z"/>
+                </svg>
+                <span>Подзвонити в магазин</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% block main %}{% endblock %}
+</body>
+
+<!-- MDB -->
+<script type="text/javascript" src="static/js/mdb.min.js"></script>
+<script type="text/javascript">
+function postToUrl(path, method) {
+  method = method || "post"; // Устанавливаем метод отправки.
+
+  var form = document.createElement("form");
+  form.setAttribute("method", method);
+  form.setAttribute("action", path);
+  document.body.appendChild(form);
+  form.submit();
+}</script>
+</html>

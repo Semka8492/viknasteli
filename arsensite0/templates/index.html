@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+  {% block title %} ВІКНА|СТЕЛІ {% endblock %}
+  {% block main %}
+    <main>
+      <div class="container p-3" style="margin-top:80px"><img src="static/img/img001.jpg" class="img img-fluid" alt="Стелі Вікна"></div>
+      <div class="container">
+        <h1 style="text-align: center;">Швидко, чисто, безпечно!</h1>
+        <div class="row">
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Вигідна ціна</h3></th>
+              </tr>
+                <th><img src="static/img/item1.png" alt="icon"></th>
+                <th><span>Краще відношення ціни та якості</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Професіоналізм</h3></th>
+              </tr>
+                <th><img src="static/img/item2.png" alt="icon"></th>
+                <th><span>Досвідчена бригада та сучасне обладнання</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Широкий асортимент</h3></th>
+              </tr>
+                <th><img src="static/img/item3.png" alt="icon"></th>
+                <th><span>Більше 3000 кольорів</span></th>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Найкращі матеріали</h3></th>
+              </tr>
+                <th><img src="static/img/item4.png" alt="icon"></th>
+                <th><span>Використовуємо лише якісні екологічні плівки БЕЗ запаху</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Гарантія 100 років</h3></th>
+              </tr>
+                <th><img src="static/img/item5.png" alt="icon"></th>
+                <th><span>Наші стелі НЕ псуються та НЕ провисають</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Укладання договору</h3></th>
+              </tr>
+                <th><img src="static/img/item6.png" alt="icon"></th>
+                <th><span>Працюємо офіційно, маємо усі необхідні сертифікати</span></th>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Безкоштовний замір</h3></th>
+              </tr>
+                <th><img src="static/img/item7.png" alt="icon"></th>
+                <th><span>Виїзджаємо на протязі години або в зручний для вас час</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Цінуємо ваш час</h3></th>
+              </tr>
+                <th><img src="static/img/item2.png" alt="icon"></th>
+                <th><span>Виготовлення стелі на протязі 1-2 днів та установка всього за 2-3 години</span></th>
+            </table>
+          </div>
+          <div class="col">
+            <table class="table table-borderless">
+              <tr>
+                <th colspan="2"><h3 style="text-align: center;">Акуратний монтаж</h3></th>
+              </tr>
+                <th><img src="static/img/item3.png" alt="icon"></th>
+                <th><span>Після установки прибираємо приміщення</span></th>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1 class='text-center'>Каталог товарів</h1>
+        {% for key, value in items.items() %}
+        <h3 class="text-center mb-4"  id="{{ key }}">{{ key }}</h3>
+        <div class="row wow fadeIn">
+          {% for category in value %}
+            <div class="col mb-4">
+              <div class="card bg-yellow">
+                {% if category != "None" %}
+                  <div class="view overlay">
+                    <img src="{{ 'static/img/' + category['path'] }}" alt="Глянцеві" class="card-img-top">
+                  </div>
+                  <div class="card-body text-center">
+                    <strong>{{ key }}</strong>
+                    <h5>
+                      <strong>
+                        {{category["name"]}} 
+                      </strong>
+                    </h5>
+                    <h4 class="font-weight-bold">
+                      <strong class="text-red">
+                        {{category["price"]}}грн.
+                      </strong>
+                    </h4>
+                    <form action="/sell" method="POST">
+                      <input type="hidden" name="name" value="{{category['name'] }}">
+                      <input type="hidden" name="category" value="{{ key }}">
+                      <button type="submit" class="btn bg-red" name="sell">
+                        Замовити
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-basket-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                {% else %}
+                <div class="view overlay bg-light">
+                  <h2 class="text-center"></h2>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% if loop.index % 3 == 0 %}
+        </div>
+        <div class="row wow fadeIn">
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </main>
+    {% endblock %}
